@@ -25,10 +25,19 @@ exports.up = function(knex, Promise) {
       tbl.string('personalName').notNullable()
       tbl.string('personalSite').notNullable()
   })
+  .createTable('usersDB', (tbl) => {
+      tbl.increments()
+      tbl.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+      tbl.integer('financial_id').references('id').inTable('financial').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+      tbl.integer('shopping_id').references('id').inTable('shopping').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+      tbl.integer('personal_id').references('id').inTable('personal').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+  })
 
-  
 };
 
-exports.down = function(knex, Promise) {
-return knex.schema.dropTableIfExists('users')
+exports.down = async function (knex, Promise) {
+    await knex.schema.dropTableIfExists('usersDB')
+    await knex.schema.dropTableIfExists('personal')
+    await knex.schema.dropTableIfExists('shopping')
+    await knex.schema.dropTableIfExists('financial')
 };
