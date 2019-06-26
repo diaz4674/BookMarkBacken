@@ -6,28 +6,28 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('financial').insert([
         { 
-          name: "Wells Fargo", 
-          site: "https://www.wellsfargo.com/" 
+          FinancialName: "Wells Fargo", 
+          FinancialSite: "https://www.wellsfargo.com/" 
         },
         {
-          name: "Bank of America",
-          site: "https://www.bankofamerica.com/"
+          FinancialName: "Bank of America",
+          FinancialSite: "https://www.bankofamerica.com/"
         },
         {
-          name: "Chase",
-          site: "https://secure01a.chase.com/web/auth/dashboard"
+          FinancialName: "Chase",
+          FinancialSite: "https://secure01a.chase.com/web/auth/dashboard"
         },
         {
-          name: "Citi Bank",
-          site: "https://online.citi.com/US/login.do?locale=en_US"
+          FinancialName: "Citi Bank",
+          FinancialSite: "https://online.citi.com/US/login.do?locale=en_US"
         },
         {
-          name: "Capital One",
-          site: "https://www.capitalone.com/"
+          FinancialName: "Capital One",
+          FinancialSite: "https://www.capitalone.com/"
         },
         {
-          name: "American Express",
-          site: "https://www.americanexpress.com/"
+          FinancialName: "American Express",
+          FinancialSite: "https://www.americanexpress.com/"
         }
       ]);
     });

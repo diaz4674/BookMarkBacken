@@ -1,17 +1,17 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('financial').truncate()
+  return knex('shopping').truncate()
     .then(function () {
       // Inserts seed entries
-      return knex('financial').insert([
+      return knex('shopping').insert([
         {
-          name: "Amazon",
-          site: "https://www.amazon.com/"
+          storeName: "Amazon",
+          storeSite: "https://www.amazon.com/"
         },
         {
-          name: "Best Buy",
-          site: "https://www.bestbuy.com/"
+          storeName: "Best Buy",
+          storeSite: "https://www.bestbuy.com/"
         }
       ]);
     });

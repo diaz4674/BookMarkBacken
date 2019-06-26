@@ -6,16 +6,16 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('personal').insert([
         {
-          name: "Reddit",
-          site: "https://www.reddit.com/"
+          personalName: "Reddit",
+          personalSite: "https://www.reddit.com/"
         },
         {
-          name: "LinedIn",
-          site: "https://www.linkedin.com/uas/login"
+          personalName: "LinedIn",
+          personalSite: "https://www.linkedin.com/uas/login"
         },
         {
-          name: "Youtube",
-          site: "https://www.youtube.com/"
+          personalName: "Youtube",
+          personalSite: "https://www.youtube.com/"
         }
       ]);
     });
