@@ -5,13 +5,9 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-        connection: { filename: './data/bookmark.db3' },
-        useNullAsDefault: true,
-        migrations: {
-            directory: './migrations',
-            tableName: 'dbmigrations',
-          },
-    }
+      filename: './dev.sqlite3'
+    },
+    useNullAsDefault: true
   },
 
   staging: {
@@ -21,7 +17,6 @@ module.exports = {
       user:     'username',
       password: 'password'
     },
-
     pool: {
       min: 2,
       max: 10
