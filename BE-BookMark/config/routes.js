@@ -19,15 +19,14 @@ module.exports = server => {
     server.get('/', welcome)
     server.post('/register', register)
     server.post('/login', login)
-    server.get('/works', authenticate, works)
+    server.get('/financial', authenticate, financial)
+    server.get('/shopping', authenticate, shopping)
+    server.get('/personal', authenticate, personal)
+
 }
 
 const welcome = (req, res) => {
     res.send('Welcome!')
-}
-
-const works = (req, res) => {
-    res.send('it passed!')
 }
 
 const register = (req, res) => {
@@ -71,4 +70,37 @@ const login = (req, res) => {
         res.status(500).json(err)
     })
 }
+
+const financial = (req, res) => {
+    db('financial')
+        .then(finance => {
+            res.status(200).json(finance)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+}
+
+
+
+const shopping = (req, res) => {
+    db('shopping')
+        .then(shopping => {
+            res.status(200).json(shopping)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+}
+
+const personal = (req, res) => {
+    db('personal')
+        .then(personal => {
+            res.status(200).json(personal)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+}
+
 
