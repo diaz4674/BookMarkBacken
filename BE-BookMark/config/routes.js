@@ -5,7 +5,7 @@ const secrets = require('./secrets.js')
 const db = require('../data/dbConfig.js')
 const Users = require('./helpers.js')
 
-// const {authenticate} = require('..auth/authenticate')
+const {authenticate} = require('../auth/authenticate')
 
 generateToken = (user) =>{
     return jwt.sign({
@@ -17,11 +17,17 @@ generateToken = (user) =>{
 
 module.exports = server => {
     server.get('/', welcome)
-    server.get('/register', register)
+    server.post('/register', register)
+    server.post('/login', login)
+    server.get('/works', authenticate, works)
 }
 
 const welcome = (req, res) => {
     res.send('Welcome!')
+}
+
+const works = (req, res) => {
+    res.send('it passed!')
 }
 
 const register = (req, res) => {
@@ -39,7 +45,29 @@ const register = (req, res) => {
             token: token
         })
     })
-    .catch(err =>{
+    .catch(err => {
+        res.status(500).json(err)
+    })
+}
+
+const login = (req, res) => {
+    let {email, password} = req.body
+
+    Users.findBy({email})
+    .first()
+    .then(user => {
+        if(user && bcrypt.compareSync(password, user.password)){
+            const token = generateToken(user)
+
+            res.status(200).json({
+                message: `Welcome back ${user.username}`,
+                token: token
+            })
+        } else {
+            res.status(500).json({message: "Sorry, email or password does not match. Try again."})
+        }
+    })
+    .catch(err => {
         res.status(500).json(err)
     })
 }
