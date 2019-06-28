@@ -5,7 +5,8 @@ module.exports = {
     find,
     findBy,
     findById,
-    addFinancial
+    addFinancial,
+    addStores
 }
 
 function find() {
@@ -18,6 +19,11 @@ function findBy(filter) {
 
 async function addFinancial(bank){
     const [id] = await db('financial').insert(bank)
+    return findById(id)
+}
+
+async function addStores(store){
+    const [id] = await db('shopping').insert(store)
     return findById(id)
 }
 

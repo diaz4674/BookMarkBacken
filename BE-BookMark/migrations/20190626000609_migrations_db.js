@@ -20,6 +20,8 @@ exports.up = function(knex, Promise) {
         tbl.increments()
         tbl.string('FinancialName').notNullable()
         tbl.string('FinancialSite').notNullable()
+        tbl.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+ 
     })
     .createTable('shopping', (tbl) => {
         tbl.increments()

@@ -22,7 +22,9 @@ module.exports = server => {
     server.get('/financial', authenticate, financial)
     server.get('/shopping', authenticate, shopping)
     server.get('/personal', authenticate, personal)
-    server.post('/addBanks', addBanks)
+    server.post('/addBanks/:id', addBanks)
+    server.post('/addShopping', addShopping)
+
     server.get('/getUser/:id', getUser)
 }
 
@@ -30,6 +32,7 @@ const welcome = (req, res) => {
     res.send('Welcome!')
 }
 
+//REGISTER
 const register = (req, res) => {
     let user = req.body
 
@@ -50,6 +53,7 @@ const register = (req, res) => {
     })
 }
 
+//LOGIN
 const login = (req, res) => {
     let {email, password} = req.body
 
@@ -72,6 +76,8 @@ const login = (req, res) => {
     })
 }
 
+
+//GET table data
 const financial = (req, res) => {
     db('financial')
         .then(finance => {
@@ -80,21 +86,6 @@ const financial = (req, res) => {
         .catch(err => {
             res.status(500).json(err)
         })
-}
-
-const addBanks = (req, res) => {
-    let bod = req.body
-
-    bod.map(theseBanks => {
-        Users.addFinancial(theseBanks)
-        .then(newBank => {
-            res.status(200).json(newBank)
-        })
-        .catch(err =>  {
-            res.status(500).json(err)
-        })
-    })
-
 }
 
 const shopping = (req, res) => {
@@ -117,9 +108,49 @@ const personal = (req, res) => {
         })
 }
 
+//CREATE endpoint data
+const addBanks = (req, res) => {
+    let {id} = req.params
+    let bod = req.body
+
+    // let userbanks = [{bod, id: id}]
+    // console.log(userbanks)
+    bod.map(theseBanks => {
+        let banksArray = {...theseBanks, user_id: id}
+        // console.log(banksArray)
+        Users.addFinancial(banksArray)
+        .then(newBank => {
+            res.status(200).json(newBank)
+        })
+        .catch(err =>  {
+            res.status(500).json(err)
+        })
+    })
+
+}
+
+const addShopping = (req, res) => {
+    let bod = req.body
+
+    bod.map(theseStores => {
+        Users.addStores(theseStores)
+        .then(newStore => {
+            res.status(200).json(newStore)
+        })
+        .catch(err =>  {
+            res.status(500).json(err)
+        })
+    })
+
+}
+
+
+
+
+//GET individual user data
 const getUser = (req, res) => {
     let {id} = req.params
-    console.log(req.body)
+    console.log(id)
     
 
 }
