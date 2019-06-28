@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const secrets = require('./secrets.js')
 const db = require('../data/dbConfig.js')
-const Users = require('./helpers.js')
+const Users = require('./users-helpers.js')
 
 const {authenticate} = require('../auth/authenticate')
 
@@ -11,7 +11,7 @@ generateToken = (user) =>{
     return jwt.sign({
         userId: user.id,
     }, secrets.jwt, {
-        expiresIn:'1h'
+        expiresIn:'1d'
     })
 }
 
@@ -22,7 +22,8 @@ module.exports = server => {
     server.get('/financial', authenticate, financial)
     server.get('/shopping', authenticate, shopping)
     server.get('/personal', authenticate, personal)
-
+    server.post('/addBanks', addBanks)
+    server.get('/getUser/:id', getUser)
 }
 
 const welcome = (req, res) => {
@@ -81,7 +82,20 @@ const financial = (req, res) => {
         })
 }
 
+const addBanks = (req, res) => {
+    let bod = req.body
 
+    bod.map(theseBanks => {
+        Users.addFinancial(theseBanks)
+        .then(newBank => {
+            res.status(200).json(newBank)
+        })
+        .catch(err =>  {
+            res.status(500).json(err)
+        })
+    })
+
+}
 
 const shopping = (req, res) => {
     db('shopping')
@@ -103,4 +117,9 @@ const personal = (req, res) => {
         })
 }
 
+const getUser = (req, res) => {
+    let {id} = req.params
+    console.log(req.body)
+    
 
+}

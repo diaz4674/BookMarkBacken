@@ -48,4 +48,3 @@ exports.up = function(knex, Promise) {
       await knex.schema.dropTableIfExists('personal')
       await knex.schema.dropTableIfExists('usersDB')
   };
-  
