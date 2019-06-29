@@ -19,15 +19,15 @@ module.exports = server => {
     server.get('/', welcome)
     server.post('/register', register)
     server.post('/login', login)
+    server.post('/addBanks/:id', authenticate, addBanks)
+    server.post('/addStoreData/:id', authenticate, addStoreData)
+    server.post('/addPersonal/:id',  authenticate, addPersonalSites)
     server.get('/financial', authenticate, financial)
     server.get('/shopping', authenticate, shopping)
     server.get('/personal', authenticate, personal)
-    server.post('/addBanks/:id', addBanks)
-    server.post('/addStoreData/:id', addStoreData)
-    server.post('/addPersonal/:id', addPersonalSites)
-    server.get('/getUserPersonal/:id', getUserPersonal)
-    server.get('/getUserFinancial/:id', getUserFinancial)
-    server.get('/getUserShopping/:id', getUserShopping)
+    server.get('/getUserPersonal/:id',  authenticate, getUserPersonal)
+    server.get('/getUserFinancial/:id',  authenticate, getUserFinancial)
+    server.get('/getUserShopping/:id',  authenticate, getUserShopping)
     
 }
 
