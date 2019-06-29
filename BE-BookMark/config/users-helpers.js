@@ -7,12 +7,14 @@ module.exports = {
     findById,
     addFinancial,
     addStores,
-    addPersonal
+    addPersonal,
 }
 
 function find() {
     return db('users').select('id', 'username', 'email', 'password')
 }
+
+
 
 function findBy(filter) {
     return db('users').where(filter);
@@ -30,8 +32,8 @@ async function addStores(store){
 
 
 async function addPersonal(site){
-    const newPersonalSite = await db('personal').insert(site)
-    return newPersonalSite
+    const [id] = await db('personal').insert(site)
+    return findById(id)
 }
 
 async function add(user){

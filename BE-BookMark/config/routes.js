@@ -25,7 +25,7 @@ module.exports = server => {
     server.post('/addBanks/:id', addBanks)
     server.post('/addStoreData/:id', addStoreData)
     server.post('/addPersonal/:id', addPersonalSites)
-    server.get('/getUser/:id', getUser)
+    server.get('/getUserPersonal/:id', getUserPersonal)
 }
 
 const welcome = (req, res) => {
@@ -118,7 +118,7 @@ const addBanks = (req, res) => {
 
         Users.addFinancial(banksArray)
         .then(newBank => {
-            res.status(200).json(newBank)
+            res.status(200).json({message: "Successfully added an institution "})
         })
         .catch(err =>  {
             res.status(500).json(err)
@@ -136,7 +136,7 @@ const addStoreData  = (req, res) => {
 
         Users.addStores(StoreArray)
         .then(newStore => {
-            res.status(200).json(newStore)
+            res.status(200).json({message: "Successfully added a Store "})
         })
         .catch(err =>  {
             res.status(500).json(err)
@@ -156,7 +156,7 @@ const addPersonalSites = (req, res) => {
 
         Users.addPersonal(SitesArray)
             .then(newSites => {
-                res.status(200).json(newSites)
+                res.status(200).json({message: "Successfully added personal site"})
             })
             .catch(err => {
                 res.status(500).json(err)
@@ -171,9 +171,22 @@ const addPersonalSites = (req, res) => {
 
 
 //GET user sites data 
-const getUser = (req, res) => {
+const getUserPersonal = async(req, res) => {
     let {id} = req.params
-    
-    req.body
+
+    await db('personal')
+        .then(personal => {
+            
+           const filtered = personal.filter( myData => {
+                return myData.personal_user_id == id
+
+            })
+            console.log(filtered)
+            res.stauts(200).json(filtered)
+         
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
 
 }
