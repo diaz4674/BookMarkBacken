@@ -4,15 +4,8 @@ exports.up = function(knex, Promise) {
     
     .createTable('users', users => {
         users.increments()
-  
-  
-        users.string('username', 255)
-        .notNullable()
-  
-        users.string('email', 255)
-        .notNullable()
-        .unique()
-  
+        users.string('username', 255).notNullable()
+        users.string('email', 255).notNullable().unique()
         users.string('password',255).notNullable()
     })
   
@@ -35,13 +28,6 @@ exports.up = function(knex, Promise) {
         tbl.integer('personal_user_id').notNullable()
 
     })
-    .createTable('usersDB', (tbl) => {
-        tbl.increments()
-        tbl.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-        tbl.integer('financial_user_id').references('id').inTable('financial').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-        tbl.integer('shopping_user_id').references('id').inTable('shopping').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-        tbl.integer('personal_user_id').references('id').inTable('personal').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-    })
   
   };
   
@@ -50,5 +36,4 @@ exports.up = function(knex, Promise) {
       await knex.schema.dropTableIfExists('financial')
       await knex.schema.dropTableIfExists('shopping')
       await knex.schema.dropTableIfExists('personal')
-      await knex.schema.dropTableIfExists('usersDB')
   };
