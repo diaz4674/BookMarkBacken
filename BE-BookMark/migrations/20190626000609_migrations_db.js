@@ -20,25 +20,27 @@ exports.up = function(knex, Promise) {
         tbl.increments()
         tbl.string('FinancialName').notNullable()
         tbl.string('FinancialSite').notNullable()
-        tbl.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
- 
+        tbl.integer('financial_user_id').notNullable()
     })
     .createTable('shopping', (tbl) => {
         tbl.increments()
         tbl.string('storeName').notNullable()
         tbl.string('storeSite').notNullable()
+        tbl.integer('shopping_user_id').notNullable()
     })
     .createTable('personal', (tbl) => {
         tbl.increments()
         tbl.string('personalName').notNullable()
         tbl.string('personalSite').notNullable()
+        tbl.integer('personal_user_id').notNullable()
+
     })
     .createTable('usersDB', (tbl) => {
         tbl.increments()
         tbl.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-        tbl.integer('financial_id').references('id').inTable('financial').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-        tbl.integer('shopping_id').references('id').inTable('shopping').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
-        tbl.integer('personal_id').references('id').inTable('personal').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+        tbl.integer('financial_user_id').references('id').inTable('financial').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+        tbl.integer('shopping_user_id').references('id').inTable('shopping').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
+        tbl.integer('personal_user_id').references('id').inTable('personal').onDelete('CASCADE').onUpdate('CASCADE').notNullable()
     })
   
   };

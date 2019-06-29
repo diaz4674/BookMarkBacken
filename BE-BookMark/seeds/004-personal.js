@@ -10,7 +10,7 @@ exports.seed = function(knex, Promise) {
           personalSite: "https://www.reddit.com/"
         },
         {
-          personalName: "LinedIn",
+          personalName: "LinkedIn",
           personalSite: "https://www.linkedin.com/uas/login"
         },
         {

@@ -23,8 +23,8 @@ module.exports = server => {
     server.get('/shopping', authenticate, shopping)
     server.get('/personal', authenticate, personal)
     server.post('/addBanks/:id', addBanks)
-    server.post('/addShopping', addShopping)
-
+    server.post('/addStoreData/:id', addStoreData)
+    server.post('/addPersonal/:id', addPersonalSites)
     server.get('/getUser/:id', getUser)
 }
 
@@ -113,11 +113,9 @@ const addBanks = (req, res) => {
     let {id} = req.params
     let bod = req.body
 
-    // let userbanks = [{bod, id: id}]
-    // console.log(userbanks)
     bod.map(theseBanks => {
-        let banksArray = {...theseBanks, user_id: id}
-        // console.log(banksArray)
+        let banksArray = {...theseBanks, financial_user_id: id}
+
         Users.addFinancial(banksArray)
         .then(newBank => {
             res.status(200).json(newBank)
@@ -129,17 +127,40 @@ const addBanks = (req, res) => {
 
 }
 
-const addShopping = (req, res) => {
+const addStoreData  = (req, res) => {
+    let {id} = req.params
     let bod = req.body
 
     bod.map(theseStores => {
-        Users.addStores(theseStores)
+        let StoreArray = {...theseStores, shopping_user_id: id}
+
+        Users.addStores(StoreArray)
         .then(newStore => {
             res.status(200).json(newStore)
         })
         .catch(err =>  {
             res.status(500).json(err)
         })
+
+    })
+
+}
+
+const addPersonalSites = (req, res) => {
+
+    let{id} = req.params
+    let bod = req.body
+    
+    bod.map(theseSites => {
+        let SitesArray = {...theseSites, personal_user_id: id}
+
+        Users.addPersonal(SitesArray)
+            .then(newSites => {
+                res.status(200).json(newSites)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
     })
 
 }
@@ -147,10 +168,12 @@ const addShopping = (req, res) => {
 
 
 
-//GET individual user data
+
+
+//GET user sites data 
 const getUser = (req, res) => {
     let {id} = req.params
-    console.log(id)
     
+    req.body
 
 }

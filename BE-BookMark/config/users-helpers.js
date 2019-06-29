@@ -6,7 +6,8 @@ module.exports = {
     findBy,
     findById,
     addFinancial,
-    addStores
+    addStores,
+    addPersonal
 }
 
 function find() {
@@ -25,6 +26,12 @@ async function addFinancial(bank){
 async function addStores(store){
     const [id] = await db('shopping').insert(store)
     return findById(id)
+}
+
+
+async function addPersonal(site){
+    const newPersonalSite = await db('personal').insert(site)
+    return newPersonalSite
 }
 
 async function add(user){
