@@ -26,6 +26,8 @@ module.exports = server => {
     server.post('/addStoreData/:id', addStoreData)
     server.post('/addPersonal/:id', addPersonalSites)
     server.get('/getUserPersonal/:id', getUserPersonal)
+    server.get('/getUserFinancial/:id', getUserFinancial)
+    
 }
 
 const welcome = (req, res) => {
@@ -108,6 +110,47 @@ const personal = (req, res) => {
         })
 }
 
+//GET Individual user database sites
+const getUserFinancial = async(req, res) => {
+    let {id} = req.params
+//getting user financial sites 
+    await db('financial')
+        .then(institutions => {
+            
+           const filtered = institutions.filter( myData => {
+                return myData.financial_user_id == id
+
+            })
+            console.log(filtered)
+            res.status(200).json(filtered)
+         
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+}
+
+const getUserPersonal = async(req, res) => {
+    let {id} = req.params
+//getting user personal sites 
+    await db('personal')
+        .then(personal => {
+            
+           const filtered = personal.filter( myData => {
+                return myData.personal_user_id == id
+
+            })
+            console.log(filtered)
+            res.status(200).json(filtered)
+         
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+}
+
+
+
 //CREATE endpoint data
 const addBanks = (req, res) => {
     let {id} = req.params
@@ -146,6 +189,8 @@ const addStoreData  = (req, res) => {
 
 }
 
+
+
 const addPersonalSites = (req, res) => {
 
     let{id} = req.params
@@ -168,25 +213,3 @@ const addPersonalSites = (req, res) => {
 
 
 
-
-
-//GET user sites data 
-const getUserPersonal = async(req, res) => {
-    let {id} = req.params
-
-    await db('personal')
-        .then(personal => {
-            
-           const filtered = personal.filter( myData => {
-                return myData.personal_user_id == id
-
-            })
-            console.log(filtered)
-            res.stauts(200).json(filtered)
-         
-        })
-        .catch(err => {
-            res.status(500).json(err)
-        })
-
-}
