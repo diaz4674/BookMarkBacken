@@ -27,6 +27,7 @@ module.exports = server => {
     server.post('/addPersonal/:id', addPersonalSites)
     server.get('/getUserPersonal/:id', getUserPersonal)
     server.get('/getUserFinancial/:id', getUserFinancial)
+    server.get('/getUserShopping/:id', getUserShopping)
     
 }
 
@@ -121,7 +122,23 @@ const getUserFinancial = async(req, res) => {
                 return myData.financial_user_id == id
 
             })
-            console.log(filtered)
+            res.status(200).json(filtered)
+         
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+}
+
+const getUserShopping = async(req, res) => {
+    let {id} = req.params
+//getting user shopping sites 
+    await db('shopping')
+        .then(stores => {
+            
+           const filtered = stores.filter( myData => {
+                return myData.shopping_user_id == id
+            })
             res.status(200).json(filtered)
          
         })
@@ -140,7 +157,6 @@ const getUserPersonal = async(req, res) => {
                 return myData.personal_user_id == id
 
             })
-            console.log(filtered)
             res.status(200).json(filtered)
          
         })
