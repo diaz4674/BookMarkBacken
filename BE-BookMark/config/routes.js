@@ -50,10 +50,11 @@ const register = (req, res) => {
     Users.add(user)
     .then(saved => {
         const token = generateToken(saved)
-
+        let decoded = jwt.decode(token)
         res.status(200).json({
             message: `Welcome ${user.username}`,
-            token: token
+            token: token,
+            id: decoded.id
         })
     })
     .catch(err => {
