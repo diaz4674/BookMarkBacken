@@ -7,14 +7,12 @@ module.exports = {
     findById,
     addFinancial,
     addStores,
-    addPersonal,
+    addPersonal
 }
 
 function find() {
     return db('users').select('id', 'username', 'email', 'password')
 }
-
-
 
 function findBy(filter) {
     return db('users').where(filter);

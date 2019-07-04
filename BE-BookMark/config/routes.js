@@ -7,13 +7,18 @@ const Users = require('./users-helpers.js')
 
 const {authenticate} = require('../auth/authenticate')
 
-generateToken = (user) =>{
-    return jwt.sign({
-        userId: user.id,
-    }, secrets.jwt, {
-        expiresIn:'1d'
-    })
-}
+
+function generateToken(user) {
+    const payload = {
+      id: user.id
+    };
+  
+    const signOptions = {
+        expiresIn:  "12h",
+    };
+  
+    return jwt.sign(payload, secrets.jwt, signOptions);
+  }
 
 module.exports = server => {
     server.get('/', welcome)
@@ -65,10 +70,12 @@ const login = (req, res) => {
     .then(user => {
         if(user && bcrypt.compareSync(password, user.password)){
             const token = generateToken(user)
-
+            let decoded = jwt.decode(token)
+            // console.log(decoded)
             res.status(200).json({
                 message: `Welcome back ${user.username}`,
-                token: token
+                token: token,
+                id: decoded.id
             })
         } else {
             res.status(500).json({message: "Sorry, email or password does not match. Try again."})
