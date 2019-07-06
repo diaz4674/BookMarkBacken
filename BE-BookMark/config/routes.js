@@ -182,7 +182,6 @@ const addBanks = (req, res) => {
 
     bod.map(theseBanks => {
         let banksArray = {...theseBanks, financial_user_id: id}
-
         Users.addFinancial(banksArray)
         .then(newBank => {
             res.status(200).json({message: "Successfully added an institution "})
