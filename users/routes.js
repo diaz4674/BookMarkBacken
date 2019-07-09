@@ -1,9 +1,9 @@
 const axios = require('axios')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const secrets = require('../config/secrets.js')
+const secrets = require('./secrets.js')
 const db = require('../data/dbConfig.js')
-const Users = require('../config/users-helpers.js')
+const Users = require('./users-helpers.js')
 
 const {authenticate} = require('../auth/authenticate')
 
@@ -37,8 +37,7 @@ module.exports = server => {
 }
 
 const welcome = (req, res) => {
-    const welcome = process.env.M || 'welcome!'
-    res.status(200).json({message: welcome})
+    res.send('Welcome!')
 }
 
 //REGISTER
