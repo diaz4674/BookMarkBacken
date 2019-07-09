@@ -37,7 +37,8 @@ module.exports = server => {
 }
 
 const welcome = (req, res) => {
-    res.send('Welcome!')
+    const welcome = process.env.M || 'welcome!'
+    res.status(200).json({message: welcome})
 }
 
 //REGISTER
